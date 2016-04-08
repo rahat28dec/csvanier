@@ -10,5 +10,10 @@ package lotteryticketgenerator;
  * @author RAYMARTHINKPAD
  */
 public class LottoDemo {
-    
+
+    public static void main(String[] args) {
+        Selection s = new Selection();
+        System.out.println(s);
+
+    }
 }
