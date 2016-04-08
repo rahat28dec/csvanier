@@ -112,16 +112,25 @@ public final class Selection {
         String strResult = "";
         for (int i = 0; i < this.al.size(); i++) {
             Object obj = this.al.get(i);
-            String delim = "";
             /**
              * Add the delimeter between elements 
              * but not the last elements
              * (size - 1)
              */
+            String delim = "";
             if (i >= 0 && i < this.al.size() - 1) {
                 delim = "-";
             }
-            strResult += String.valueOf(obj) + delim;
+            /**
+             * Add zero for integer less
+             * than 10 to make output 
+             * bit pretty.
+             */
+            String zero = "";
+            if(this.al.get(i)<10) {
+                zero = "0";
+            }
+            strResult += zero + String.valueOf(obj) + delim;
 
         }
         return strResult;

@@ -12,8 +12,12 @@ package lotteryticketgenerator;
 public class LottoDemo {
 
     public static void main(String[] args) {
-        Selection s = new Selection();
-        System.out.println(s);
+        Selection winningDraw = new Selection();
+
+        Ticket t = new Ticket("Betty",6);
+        t.setWinningDraw(winningDraw);
+        
+        System.out.println(t.toString());
 
     }
 }
