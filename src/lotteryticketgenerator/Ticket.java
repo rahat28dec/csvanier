@@ -55,6 +55,11 @@ public class Ticket {
         this.ownerName = ownerName;
         this.numSelection = k;
         for(int i = 0; i < this.numSelection; i++) {
+            /**
+             * Make a new selection based on
+             * the number of selection
+             * given by the user.
+             */
             this.userSelection.add(new Selection(n,low,high));
         }
     }

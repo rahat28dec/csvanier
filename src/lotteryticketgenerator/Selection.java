@@ -108,6 +108,10 @@ public final class Selection {
         return this.strRepresentation();
     }
 
+    /**
+     * Returns beautify output
+     * @return 
+     */
     public String strRepresentation() {
         String strResult = "";
         for (int i = 0; i < this.al.size(); i++) {
