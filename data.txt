@@ -1,0 +1,8 @@
+John Smith  111 30.00  35.0
+Larry Houston   246 25.00  35.0
+Sandi Roberts   123 24.75   37.5
+Alex McCall 433 23.00   32.25
+Derek Dev   543 23.00   35.0
+Jinku Shaw  200 23.00   37.5
+Stanley Garner  135 15.25   33.0
+Sunny Chen  222 15.25   35
