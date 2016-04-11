@@ -3,16 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package payroll;
+package csvdemo;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.StringTokenizer;
 
 /**
  *
@@ -45,11 +43,16 @@ public class ProcessData {
             Employee out;
 
             while (dataFile.hasNext()) {
+                
                 /**
                  * Store data to be processed by
                  * the method storeEmployee
                  */
                 out = this.storeProcessedEmpData(dataFile);
+                
+                // For testing
+                //this.displayToString(out);
+                
                 /**
                  * Store Employee object into an
                  * array list.
@@ -68,38 +71,32 @@ public class ProcessData {
     }
 
     /**
-     * Breaks a line of input into a usable data to be stored in an Employee
-     * class.
-     *
+     * Using split function to break a sentence
+     * into a basic tokens
      * @param dataFile
-     * @return
+     * @return 
      */
     public Employee storeProcessedEmpData(Scanner dataFile) {
-
-        //reads file one per line
-        //breaks each char into a token
         String l = dataFile.nextLine();
-        StringTokenizer token = new StringTokenizer(l);
-
-        String fName = token.nextToken();
-        String lName = token.nextToken();
-        String fullName = fName.concat(" ").concat(lName);
-        int idNum = Integer.parseInt(token.nextToken());
-
-        // Call Employee class to store each employee
-        Employee emp = new Employee(fullName, idNum);
-
-        double hourlyRate = Double.parseDouble(token.nextToken());
-        double hoursWorked = Double.parseDouble(token.nextToken());
-
-        emp.setHourlyRate(hourlyRate);
-        emp.setHoursWorked(hoursWorked);
-
-        double grossPayPerEmp = hourlyRate * hoursWorked;
-        emp.setGrossPayPerEmployee(grossPayPerEmp);
-
+        String[] result = l.split("\\,");
+        Employee emp = null;
+        
+        /**
+         * Since we know index of each
+         * Employee properties, we can
+         * assign
+         */
+        for(int i = 0; i < result.length; i++) {
+            emp = new Employee(result[0].concat(" ").concat(result[1]), Integer.parseInt(result[2]));
+            emp.setHourlyRate(Double.parseDouble(result[3]));
+            emp.setHoursWorked(Double.parseDouble(result[4]));
+            
+            double grossPayPerEmp = emp.getHourlyRate()*emp.getHoursWorked();
+            emp.setGrossPayPerEmployee(grossPayPerEmp);
+        }
+        
         return emp;
-
+        
     }
 
     /**
@@ -149,6 +146,10 @@ public class ProcessData {
         System.out.println("Displays total number of hours worked for all employee: " + String.format("%,2.2f", this.totalNumHoursWorked(this.empArrL)));
         System.out.println("The average pay per work: " + String.format("%,2.2f", this.avgPayPerWork()));
 
+    }
+    
+    public void displayToString(Employee e) {
+        System.out.println(e.toString());
     }
 
 }
