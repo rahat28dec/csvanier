@@ -19,7 +19,7 @@ import java.util.Scanner;
  * @author RAYMARTHINKPAD
  */
 public class ProcessData extends GradingSystem {
-    private final Requirements r = new Requirements();
+    
     private Scanner dataFile;
     private final int NUM_STUDENT = 200;
     private int[] wrongAnswer = new int[20];
