@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -79,6 +80,7 @@ public class ProcessData {
     public Employee storeProcessedEmpData(Scanner dataFile) {
         String l = dataFile.nextLine();
         String[] result = l.split("\\,");
+        System.out.println(Arrays.toString(result));
         Employee emp = null;
         
         /**
