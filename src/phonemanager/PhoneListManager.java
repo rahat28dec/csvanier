@@ -37,7 +37,6 @@ public class PhoneListManager {
             System.out.println("Phone list loaded from file " + this.fileName);   
             
             PhoneItem phoneItem;
-            phoneItem = new PhoneItem();
             while((line = bufferedReader.readLine())!=null) {
                 phoneItem = this.formatData(line);
                 this.PI_ARRAY_LIST.add(phoneItem);
@@ -145,7 +144,7 @@ public class PhoneListManager {
             this.save();
         } 
         this.isDone = true;
-        System.out.println("goodbye");
+        System.out.println("Goodbye.");
     }
     
     private void lookup() {
@@ -156,6 +155,7 @@ public class PhoneListManager {
             if(name.equalsIgnoreCase(this.PI_ARRAY_LIST.get(i).getName())) {
                 System.out.println("Given phone number: " + this.util.formatPhone(this.PI_ARRAY_LIST.get(i).getPhone()) + "\n");
                 count++;
+                break;
             }
         }
         if(count==0) {
@@ -178,20 +178,23 @@ public class PhoneListManager {
                 System.out.println();   
             }
         } else {
-            System.out.println("Sorry, '" + name + "' is already in the " + this.fileName + "\n");
+            System.out.println("Sorry, '" + name + "' is already in the " 
+                    + this.fileName + "\n");
         }
         
     }
 
     public void sortArrayList() {
-        Collections.sort(this.PI_ARRAY_LIST, (PhoneItem o1, PhoneItem o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
+        Collections.sort(this.PI_ARRAY_LIST, (PhoneItem o1, PhoneItem o2) -> 
+        o1.getName().compareToIgnoreCase(o2.getName()));
     }
     
     public void save() {
        try {
             PrintWriter pw = new PrintWriter(new FileWriter("data\\"+this.fileName));
             for (int i = 0; i < this.PI_ARRAY_LIST.size(); i++) {
-                pw.write(this.PI_ARRAY_LIST.get(i).getPhone() + " " + this.PI_ARRAY_LIST.get(i).getName() + "\n");
+                pw.write(this.PI_ARRAY_LIST.get(i).getPhone() + " " 
+                        + this.PI_ARRAY_LIST.get(i).getName() + "\n");
             }
             pw.flush();
             pw.close();
@@ -217,13 +220,26 @@ public class PhoneListManager {
             }
             System.out.println();
         } else {
-            System.out.println("Sorry, '" + name + "' is not in the " + this.fileName + "\n");
+            System.out.println("Sorry, '" + name + "' is not in the " 
+                    + this.fileName + "\n");
         }
     }
     
     
     private void delete() {
-    
+        System.out.print("Give name: ");
+        String name = SCAN.next();
+        if (this.isExists(name)) {
+            for (int i = 0; i < this.PI_ARRAY_LIST.size(); i++) {
+                if (this.PI_ARRAY_LIST.get(i).getName().equals(name)) {
+                    this.PI_ARRAY_LIST.remove(this.PI_ARRAY_LIST.get(i));
+                }
+            }
+            System.out.println("Entry deleted." + "\n");
+        } else {
+            System.out.println("Sorry, '" + name + "' is not in the " 
+                    + this.fileName + "\n");
+        }
     }
 
     public boolean isExists(String name) {
@@ -231,6 +247,7 @@ public class PhoneListManager {
         for(int i = 0; i < this.PI_ARRAY_LIST.size(); i++) {
             if(name.equalsIgnoreCase(this.PI_ARRAY_LIST.get(i).getName())) {
                 count++;
+                break; //if found stop loop no need to continue
             }
         }
         return count==1;
@@ -251,21 +268,16 @@ public class PhoneListManager {
         this.printHelp();
         // user must enter a command
         this.command();
-        
     }
 
     /**
      * Show the commands that users can use.
      */
     public void printHelp() {
-        System.out.println("\n"+"Enter one of the following commands and supply the requested information"+"\n");
-        String commands = "insert (i), ";
-        commands += "lookup (l), ";
-        commands += "size (s), ";
-        commands += "modify (m), ";
-        commands += "print (p), ";
-        commands += "delete (d), ";
-        commands += "quit (q). \n";
+        System.out.println("\n"+"Enter one of the following commands and supply "
+                + "the requested information"+"\n");
+        String commands = "insert (i), lookup (l), size (s), modify (m), print (p), ";
+        commands += "delete (d), quit (q). \n";
         System.out.println(commands);
     }
 
