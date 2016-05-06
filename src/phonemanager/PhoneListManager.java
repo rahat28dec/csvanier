@@ -19,7 +19,7 @@ public class PhoneListManager {
     private String fileName;
     private final ArrayList<PhoneItem> PI_ARRAY_LIST = new ArrayList();
     private final Scanner SCAN = new Scanner(System.in);
-    PhoneItemUtil1 util = new PhoneItemUtil1();
+    PhoneItemUtil util = new PhoneItemUtil();
     private boolean isDone = false;
 
     /**
@@ -340,9 +340,4 @@ public class PhoneListManager {
     private void phoneItemSize() {
         System.out.println("number of phone list entries: "+this.PI_ARRAY_LIST.size() + "\n");
     }
-
-
-
-
-
 }

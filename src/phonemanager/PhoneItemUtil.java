@@ -4,9 +4,9 @@ package phonemanager;
  *
  * @author RAYMARTHINKPAD
  */
-public class PhoneItemUtil1 {
+public class PhoneItemUtil {
 
-    public PhoneItemUtil1() {
+    public PhoneItemUtil() {
     }
     /**
      * format the phone number as (514) 802-8660

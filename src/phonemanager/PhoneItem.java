@@ -5,7 +5,8 @@ package phonemanager;
  * @author RAYMARTHINKPAD
  */
 public class PhoneItem {
-    PhoneItemUtil1 util = new PhoneItemUtil1();
+    PhoneItemUtil util = new PhoneItemUtil();
+    
     // empty constructor
     public PhoneItem(){};
     
@@ -14,11 +15,6 @@ public class PhoneItem {
         this.name = name.trim();
         this.phone = phone.trim();
     }
-
-//    @Override
-//    public String toString() {
-//        return "PhoneItem{" + "name=" + name + ", phone=" + phone + '}';
-//    }
 
     public String getName() {
         return name;
