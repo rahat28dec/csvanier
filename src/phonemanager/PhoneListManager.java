@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
 
@@ -37,19 +38,15 @@ public class PhoneListManager {
         
         try {
             FileReader readFile = new FileReader("data\\"+this.fileName);
-            BufferedReader bufferedReader;
-            bufferedReader = new BufferedReader(readFile);
-            
-            System.out.println("Phone list loaded from file " + this.fileName);   
-            
-            PhoneItem phoneItem;
-            while((line = bufferedReader.readLine())!=null) {
-                phoneItem = this.formatData(line);
-                this.PI_ARRAY_LIST.add(phoneItem);
+            try (BufferedReader bufferedReader = new BufferedReader(readFile)) {
+                System.out.println("Phone list loaded from file " + this.fileName);
+                
+                PhoneItem phoneItem;
+                while((line = bufferedReader.readLine())!=null) {
+                    phoneItem = this.formatData(line);
+                    this.PI_ARRAY_LIST.add(phoneItem);
+                }
             }
-            
-            
-            bufferedReader.close();
             
         } catch (FileNotFoundException ex) {
             // if file not found do NOT create
@@ -59,6 +56,7 @@ public class PhoneListManager {
         } 
         
         // sort the array list after retrieving the data
+        // needed for print() method
         Collections.sort(this.PI_ARRAY_LIST, (PhoneItem o1, PhoneItem o2) -> 
                 o1.getName().compareToIgnoreCase(o2.getName()));
     }
@@ -79,7 +77,7 @@ public class PhoneListManager {
         for(int i = 0; i < result.length; i++) {
             pi = new PhoneItem(result[1], result[0]);
         }
-        System.out.println(pi.toString());
+        //System.out.println(pi.toString());
         return pi;
     }
     
@@ -183,6 +181,7 @@ public class PhoneListManager {
         }
         
     }
+    
     /**
      * Insert an entry in the
      * list. 
@@ -223,17 +222,17 @@ public class PhoneListManager {
      */
     public void save() {
        try {
-            PrintWriter pw = new PrintWriter(new FileWriter("data\\"+this.fileName));
-            for (int i = 0; i < this.PI_ARRAY_LIST.size(); i++) {
-                pw.write(this.PI_ARRAY_LIST.get(i).getPhone() + " " 
-                        + this.PI_ARRAY_LIST.get(i).getName() + "\n");
-            }
-            pw.flush();
-            pw.close();
+           try (PrintWriter pw = new PrintWriter(new FileWriter("data\\"+this.fileName))) {
+               for (int i = 0; i < this.PI_ARRAY_LIST.size(); i++) {
+                   pw.write(this.PI_ARRAY_LIST.get(i).getPhone() + " "
+                           + this.PI_ARRAY_LIST.get(i).getName() + "\n");
+               }
+               pw.flush();
+           }
             System.out.println("Saving data file to phone.txt....");
             System.out.println("Thank you for using the automated directory service.");
         } catch (Exception ex) {
-            ex.printStackTrace();
+            System.out.println(ex);
         }
     }
     
@@ -338,9 +337,4 @@ public class PhoneListManager {
     private void phoneItemSize() {
         System.out.println("number of phone list entries: "+this.PI_ARRAY_LIST.size() + "\n");
     }
-
-
-
-
-
 }
