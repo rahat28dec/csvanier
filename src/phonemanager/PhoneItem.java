@@ -5,7 +5,7 @@ package phonemanager;
  * @author RAYMARTHINKPAD
  */
 public class PhoneItem {
-    PhoneItemUtil util = new PhoneItemUtil();
+    PhoneItemUtil1 util = new PhoneItemUtil1();
     // empty constructor
     public PhoneItem(){};
     
