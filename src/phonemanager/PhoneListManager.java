@@ -19,7 +19,7 @@ public class PhoneListManager {
     private String fileName;
     private final ArrayList<PhoneItem> PI_ARRAY_LIST = new ArrayList();
     private final Scanner SCAN = new Scanner(System.in);
-    PhoneItemUtil util = new PhoneItemUtil();
+    PhoneItemUtil1 util = new PhoneItemUtil1();
     private boolean isDone = false;
 
     /**
@@ -223,7 +223,8 @@ public class PhoneListManager {
      */
     public void save() {
        try {
-            PrintWriter pw = new PrintWriter(new FileWriter("data\\"+this.fileName));
+            PrintWriter pw;
+            pw = new PrintWriter(new FileWriter("data\\"+this.fileName));
             for (int i = 0; i < this.PI_ARRAY_LIST.size(); i++) {
                 pw.write(this.PI_ARRAY_LIST.get(i).getPhone() + " " 
                         + this.PI_ARRAY_LIST.get(i).getName() + "\n");
@@ -233,7 +234,7 @@ public class PhoneListManager {
             System.out.println("Saving data file to phone.txt....");
             System.out.println("Thank you for using the automated directory service.");
         } catch (Exception ex) {
-            ex.printStackTrace();
+            System.out.println(ex);
         }
     }
     
@@ -332,8 +333,9 @@ public class PhoneListManager {
         this.fileName = SCAN.nextLine();
     }
     
+    
     /**
-     * Prints the size of the array list
+     * Prints the size of the array list.
      */
     private void phoneItemSize() {
         System.out.println("number of phone list entries: "+this.PI_ARRAY_LIST.size() + "\n");

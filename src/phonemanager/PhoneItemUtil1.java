@@ -4,9 +4,9 @@ package phonemanager;
  *
  * @author RAYMARTHINKPAD
  */
-public class PhoneItemUtil {
+public class PhoneItemUtil1 {
 
-    public PhoneItemUtil() {
+    public PhoneItemUtil1() {
     }
     /**
      * format the phone number as (514) 802-8660
@@ -24,7 +24,7 @@ public class PhoneItemUtil {
      * Removes unnecessary chars
      * gets only the first char
      * and makes it lowercase
-     * @param str
+     * @param str the string to format 
      * @return 
      */
     public String formatStr(String str) {
@@ -34,8 +34,8 @@ public class PhoneItemUtil {
     /**
      * phone number must be a 10-digit and
      * must be an integer
-     * @param phNumber
-     * @return 
+     * @param phNumber phone number to validate
+     * @return returns true if phone number is valid
      */
     public  boolean validatePhNum(String phNumber) { 
         if(!(phNumber.length()==10 && phNumber.matches(".*\\d"))) {
