@@ -13,10 +13,9 @@ import java.util.Arrays;
  */
 public class BubbleSort {
     public static void main(String[] args) {
-        int[] arr = {3,2,9,7,6,8};
-        System.out.println("original array: "+Arrays.toString(arr));
-
-        System.out.println("result: "+Arrays.toString(bubblesort(arr)));
+        int[] arr = {5, 1, 3, 6, 4, 2};
+        System.out.println("original order: \t" + Arrays.toString(arr).replaceAll("\\D", " "));
+        System.out.println("sorted ascending : \t" + Arrays.toString(bubblesort(arr)).replaceAll("\\D", " "));
     }
     /**
      * larger values “bubble” toward the end 
@@ -25,33 +24,17 @@ public class BubbleSort {
      * @return 
      */
     public static int[] bubblesort(int[] arr) {
-        
-        
-        for( int i = 0; i < arr.length-1; i++) {
-            // if current element is larger
-            // than the next elem, swap
-            // otherwise do nothing increment index
-            // the larger element is shifted to the right
-            int temp;
-            boolean cond = false;
-            if(arr[i]>arr[i+1]) {
-//                System.out.println("arr[index]>arr[index+1]:\t" + arr[i] + ">" + arr[i+1]);
-                temp = arr[i]; // is holding the larger elem
-                arr[i] = arr[i+1];
-                arr[i+1]=temp;
-                cond=true;
+        for (int j = arr.length - 1; j > 0; j--) {
+            for (int i = 0; i < j; i++) {
+                int temp;
+                if (arr[i] > arr[i + 1]) {
+                    temp = arr[i]; // is holding the larger elem
+                    arr[i] = arr[i + 1];
+                    arr[i + 1] = temp;
+                }
             }
-//            System.out.println("index:" + i + " " + Arrays.toString(arr) + " swap " + cond);
         }
         
-        for(int i = arr.length-1; i > 0; i--) {
-            int temp;
-            if(arr[i]<arr[i-1]) {
-                temp = arr[i];
-                arr[i]=arr[i-1];
-                arr[i-1]=temp;
-            }
-        } 
         return arr;
     }
 }

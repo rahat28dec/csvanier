@@ -15,7 +15,7 @@ public class main {
     public static void main(String[] args) {
         int[] arr = {5,9,4,2,1,7};
         //findElem(arr, 2);
-        System.out.println("original array: \t" + Arrays.toString(arr));
+        System.out.println("original order: \t" + Arrays.toString(arr));
 
         bubblesort(arr);
     }

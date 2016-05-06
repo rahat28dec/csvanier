@@ -19,15 +19,21 @@ public class PhoneListManager {
     private String fileName;
     private final ArrayList<PhoneItem> PI_ARRAY_LIST = new ArrayList();
     private final Scanner SCAN = new Scanner(System.in);
-    PhoneItem util = new PhoneItem();
+    PhoneItemUtil util = new PhoneItemUtil();
     private boolean isDone = false;
 
+    /**
+     * Loads the file if exist and reads the 
+     * content, format it, and store it in
+     * an array list of type PhoneItem
+     * @throws IOException 
+     */
     public void load() throws IOException {
         // scan for the file
         this.scan();
         
         // will store the contents here
-        String line = null;
+        String line;
         
         try {
             FileReader readFile = new FileReader("data\\"+this.fileName);
@@ -42,8 +48,6 @@ public class PhoneListManager {
                 this.PI_ARRAY_LIST.add(phoneItem);
             }
             
-            // sort the array list after retrieving the data
-            Collections.sort(this.PI_ARRAY_LIST, (PhoneItem o1, PhoneItem o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
             
             bufferedReader.close();
             
@@ -53,6 +57,10 @@ public class PhoneListManager {
             // to the list, and save later
             System.out.println("\n"+"File: '" + this.fileName + "' not found.");
         } 
+        
+        // sort the array list after retrieving the data
+        Collections.sort(this.PI_ARRAY_LIST, (PhoneItem o1, PhoneItem o2) -> 
+                o1.getName().compareToIgnoreCase(o2.getName()));
     }
     
     /**
@@ -71,30 +79,29 @@ public class PhoneListManager {
         for(int i = 0; i < result.length; i++) {
             pi = new PhoneItem(result[1], result[0]);
         }
-
+        System.out.println(pi.toString());
         return pi;
     }
     
     /**
-     * User entered command.
-     * Command: s
-     * return s
-     * @return 
+     * User entered command. 
      * @throws java.io.IOException 
      */
     public void command() throws IOException {
         String typedCommand;
         Scanner scanner;
-        while (!this.isDone) {
+        // isDone is initialize to false
+        // isDone is true if command typed
+        // is q
+        while (!this.isDone) { 
             System.out.print("Command: ");
             scanner = new Scanner(System.in);
             typedCommand = scanner.next();
-            // rin the commands
-            this.runCommand(this.formatStr(typedCommand));
+            // run the commands
+            this.runCommand(this.util.formatStr(typedCommand));
         }
         
     }
-    
     
     private void runCommand(String formattedCommand) {
         switch (formattedCommand) {
@@ -124,6 +131,10 @@ public class PhoneListManager {
         }
     }
     
+    /**
+     * Print the contents of the
+     * list
+     */
     public void print() {
         if(this.PI_ARRAY_LIST.isEmpty()) {
             System.out.println("Sorry, nothing to print" + "\n");
@@ -137,16 +148,25 @@ public class PhoneListManager {
         } 
     }
     
+    /**
+     * Call the save method if input yields
+     * y for yes, otherwise do not save the
+     * file
+     */
     private void quit() {
         System.out.print("Save changes to file (y/n)? ");
         String response = SCAN.next();
-        if(this.formatStr(response).equals("y")) {
+        if(this.util.formatStr(response).equals("y")) {
             this.save();
         } 
         this.isDone = true;
         System.out.println("Goodbye.");
     }
     
+    /**
+     * Search for an entry in the list, break
+     * if found no need to continue
+     */
     private void lookup() {
         System.out.print("Give name: ");
         String name = SCAN.next();
@@ -163,7 +183,10 @@ public class PhoneListManager {
         }
         
     }
-    
+    /**
+     * Insert an entry in the
+     * list. 
+     */
     private void insert() {
         System.out.print("Give name: ");
         String name = SCAN.next();
@@ -171,9 +194,9 @@ public class PhoneListManager {
             System.out.print("Give phone number: ");
             
             String phNumber = SCAN.next();
-            if(this.validatePhNum(phNumber)) {
+            if(this.util.validatePhNum(phNumber)) {
                 this.PI_ARRAY_LIST.add(new PhoneItem(name, phNumber));
-                // sort the array list after inserting new data
+                // sort the array list after inserting a new data
                 this.sortArrayList();
                 System.out.println();   
             }
@@ -184,11 +207,20 @@ public class PhoneListManager {
         
     }
 
+    /**
+     * Sort the array list using a PhoneItem property 
+     * (name) to compare
+     */
     public void sortArrayList() {
         Collections.sort(this.PI_ARRAY_LIST, (PhoneItem o1, PhoneItem o2) -> 
         o1.getName().compareToIgnoreCase(o2.getName()));
     }
     
+    /**
+     * Save after all the modification.
+     * Create a file if not exists
+     * and save the modification.
+     */
     public void save() {
        try {
             PrintWriter pw = new PrintWriter(new FileWriter("data\\"+this.fileName));
@@ -205,13 +237,17 @@ public class PhoneListManager {
         }
     }
     
+    /**
+     * Modify an entry given a name 
+     * to modify
+     */
     private void modify() {
         System.out.print("Give name: ");
         String name = SCAN.next();
         if (this.isExists(name)) {
             System.out.print("Give new phone number: ");
             String newPhNum = SCAN.next();
-            if (this.validatePhNum(newPhNum)) {
+            if (this.util.validatePhNum(newPhNum)) {
                 for (int i = 0; i < this.PI_ARRAY_LIST.size(); i++) {
                     if (this.PI_ARRAY_LIST.get(i).getName().equals(name)) {
                         this.PI_ARRAY_LIST.get(i).setPhone(newPhNum);
@@ -225,7 +261,10 @@ public class PhoneListManager {
         }
     }
     
-    
+    /**
+     * Delete an entry in the phone
+     * list
+     */
     private void delete() {
         System.out.print("Give name: ");
         String name = SCAN.next();
@@ -242,6 +281,11 @@ public class PhoneListManager {
         }
     }
 
+    /**
+     * @param name the name to compare with
+     * the list
+     * @return returns true if it exists
+     */
     public boolean isExists(String name) {
         int count = 0;
         for(int i = 0; i < this.PI_ARRAY_LIST.size(); i++) {
@@ -252,15 +296,11 @@ public class PhoneListManager {
         }
         return count==1;
     }
-    
-    public  boolean validatePhNum(String phNumber) { 
-        if(!(phNumber.length()==10 && phNumber.matches(".*\\d"))) {
-             System.out.println("Enter a valid 10 digit phone number." + "\n");
-             return false;
-        }
-        return true;
-    }
 
+    /**
+     * Call this to run the program
+     * @throws IOException 
+     */
     public void run() throws IOException {
         // load first
         this.load();
@@ -293,16 +333,8 @@ public class PhoneListManager {
     }
     
     /**
-     * Removes unnecessary chars
-     * gets only the first char
-     * and makes it lowercase
-     * @param str
-     * @return 
+     * Prints the size of the array list
      */
-    public String formatStr(String str) {
-        return str.substring(0, 1).toLowerCase();
-    }
-
     private void phoneItemSize() {
         System.out.println("number of phone list entries: "+this.PI_ARRAY_LIST.size() + "\n");
     }

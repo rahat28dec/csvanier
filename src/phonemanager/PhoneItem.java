@@ -5,6 +5,7 @@ package phonemanager;
  * @author RAYMARTHINKPAD
  */
 public class PhoneItem {
+    PhoneItemUtil util = new PhoneItemUtil();
     // empty constructor
     public PhoneItem(){};
     
@@ -45,13 +46,6 @@ public class PhoneItem {
     
     @Override
     public String toString() {
-        return String.format("%-15s%s", name, this.formatPhone(phone));
-    }
-    
-    public String formatPhone(String str) {
-        String formatPhone = "(" + str.substring(0, 3) + ") ";
-        formatPhone += str.substring(3, 6) + "-";
-        formatPhone += str.substring(6);
-        return formatPhone;
+        return String.format("%-15s%s", name, this.util.formatPhone(phone));
     }
 }
