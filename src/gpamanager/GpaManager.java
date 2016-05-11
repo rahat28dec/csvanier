@@ -218,7 +218,6 @@ public class GpaManager {
                 //////////////////////////////////////////////////////
                 System.out.print("Enter course credits > ");
                 courseCredit = scan.nextLine();
-                courseCreditDbl = Double.parseDouble(courseCredit);
                 //////////////////////////////////////////////////////
                 
                 
@@ -226,6 +225,7 @@ public class GpaManager {
                     System.out.println("Please enter a valid number [0-9].");
                 } else {
                     
+                    courseCreditDbl = Double.parseDouble(courseCredit);
                     //////////////////////////////////////////////////////
                     this.util.determineLetterGrade(this.gs);
                     System.out.print("Please enter a letter grade (see above) > ");
