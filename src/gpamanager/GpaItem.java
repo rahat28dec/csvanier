@@ -26,14 +26,12 @@ public class GpaItem {
         this.letterGrade = letterGrade;
     }
 
-    @Override
-    public String toString() {
-        return "GpaItem{" + "courseName=" + courseName + ", courseDesc=" 
-                + courseDesc + ", courseCredit=" + courseCredit 
-                + ", letterGrade=" + letterGrade + '}';
-    }
-
-    
+//    @Override
+//    public String toString() {
+//        return "GpaItem{" + "courseName=" + courseName + ", courseDesc=" 
+//                + courseDesc + ", courseCredit=" + courseCredit 
+//                + ", letterGrade=" + letterGrade + '}';
+//    }
     
     public GpaItem(
             String courseName, 
@@ -47,6 +45,11 @@ public class GpaItem {
         this.courseCredit = courseCredit;
         this.letterGrade = letterGrade;
         this.gradePoints = gradePoints;
+    }
+
+    @Override
+    public String toString() {
+        return "GpaItem{" + "courseName=" + courseName + ", courseDesc=" + courseDesc + ", courseCredit=" + courseCredit + ", letterGrade=" + letterGrade + ", gradePoints=" + gradePoints + '}';
     }
 
     public String getCourseName() {
@@ -69,7 +72,7 @@ public class GpaItem {
         return courseCredit;
     }
 
-    public void setCourseCredit(int courseCredit) {
+    public void setCourseCredit(double courseCredit) {
         this.courseCredit = courseCredit;
     }
 
