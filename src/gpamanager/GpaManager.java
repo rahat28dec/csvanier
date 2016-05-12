@@ -1,12 +1,15 @@
 package gpamanager;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,13 +21,17 @@ import java.util.logging.Logger;
 public class GpaManager {    
     GradingSystem gs = new GradingSystem();
     GpaItemUtil util = new GpaItemUtil();
-    ArrayList<GpaItem> gpaArrayList = new ArrayList<>();
+    List<GpaItem> gpaArrayList = new ArrayList();
     private String fileName;
     private boolean isDone = false;
     private final Scanner scan = new Scanner(System.in);
     String outputFormat = "%-20s%35s%20s%25s%15s";
     String header = String.format(this.outputFormat, 
-                    "Class", "Description", "Units", "Grade", "Grade Points") 
+                    "Class", 
+                    "Description", 
+                    "Units", 
+                    "Grade", 
+                    "Grade Points") 
                     + "\n";
 
     public String getFileName() {
@@ -36,12 +43,23 @@ public class GpaManager {
     }
     
     public void run() {
+        ///////////////////////////
         // ask which grading system
         this.gs.askGradeSystem();
-        // ask for the file to store data
+        ///////////////////////////
+       
+
+        /////////////////////////////////
+        // load the data and populate the
+        // the list
         this.load();
+        /////////////////////////////////
+        
+        
+        ///////////////////////////
         // run commands
         this.command();
+        ///////////////////////////
     }
 
     private void askGpaFile() {
@@ -55,12 +73,40 @@ public class GpaManager {
     }
     
     private void load() {
+       
+        ///////////////////////////////////
         this.askGpaFile();
-        // will store the contents here
+        ///////////////////////////////////
+
         String line;
         GpaItem gpaItem;
         try {
-            FileReader fr = new FileReader("data\\"+this.getFileName());
+            
+            ////////////////////////////////////////////////////////////////////
+            // create the folder if not exits
+            String gradingSysFolder = 
+                    this.util.returnGradingSystem(
+                            this.gs.getGradingSystem()
+                    ).toLowerCase();
+            File gradingSysFolderDir = new File("dist\\"+gradingSysFolder);
+            if(!gradingSysFolderDir.exists()) {
+                System.out.println("creating directory: " + gradingSysFolder);
+                boolean result = false;
+
+                try{
+                    gradingSysFolderDir.mkdir();
+                    result = true;
+                } catch(SecurityException se){
+                    //handle it
+                    System.out.println(se);
+                }        
+                if(result) {    
+                    System.out.println(gradingSysFolder+" directory created");  
+                }
+            }
+            ////////////////////////////////////////////////////////////////////
+            
+            FileReader fr = new FileReader("dist\\"+gradingSysFolder+"\\"+this.getFileName());
             BufferedReader br;
             br = new BufferedReader(fr);
             while((line = br.readLine())!=null) {
@@ -69,13 +115,15 @@ public class GpaManager {
             }
         } catch (FileNotFoundException fnfe) {
             System.out.println();
-            System.out.println("File " + this.getFileName() + " not found.");
-            System.out.println("Please try again.");
-            System.out.println(fnfe);
+            System.out.println("The file '" + this.getFileName() + "' not found.");
+            System.out.println(this.fileName + " created.");
         } catch (IOException ex) {
             Logger.getLogger(GpaManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //System.out.println(this.gpaArrayList);
+//        System.out.println(this.gpaArrayList);
+        Collections.sort(this.gpaArrayList, (GpaItem a, GpaItem b)->
+                a.getCourseName().compareToIgnoreCase(b.getCourseName()));
+        
     }
     
     private GpaItem formatData(String line) {
@@ -97,7 +145,7 @@ public class GpaManager {
             // joined the array list
             String courseDesc = String.join(" ", arrayListStr);
             
-            // round up to two decimal 
+            // calculate grade points 
             double gradePoints = this.gs.calcGradePointsPerClass(
                                     this.gs.getGradingSystem(), 
                                     courseCredit, 
@@ -114,7 +162,6 @@ public class GpaManager {
             );
             
         }
-
 //        System.out.println(gpaItem.toString());
         
         return gpaItem;
@@ -167,8 +214,12 @@ public class GpaManager {
     
     private void save() {
         try {
+            String gradingSysFolder = 
+                    this.util.returnGradingSystem(
+                            this.gs.getGradingSystem()
+                    ).toLowerCase();
             PrintWriter pw;
-            pw = new PrintWriter(new FileWriter("data\\"+this.fileName));
+            pw = new PrintWriter(new FileWriter("dist\\"+gradingSysFolder+"\\"+this.fileName));
             for(int i = 0; i < this.gpaArrayList.size(); i++) {
                 pw.write(
                         this.gpaArrayList.get(i).getCourseName() + " " + 
@@ -183,7 +234,7 @@ public class GpaManager {
             System.out.println("Thank you for using the automated directory service.");
         } catch(Exception ex) {
             System.out.println(ex);
-        }
+        }    
     }
     
     private void insert() {
@@ -448,7 +499,6 @@ public class GpaManager {
         }
         return count==1;
     }
-
 
 }
  
