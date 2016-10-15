@@ -1,4 +1,4 @@
-package fortesting.sorting;
+package testing_purpose.sorting;
 
 import java.util.Arrays;
 

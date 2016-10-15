@@ -1,4 +1,4 @@
-package phonemanager;
+package phone_manager;
 
 import java.io.IOException;
 

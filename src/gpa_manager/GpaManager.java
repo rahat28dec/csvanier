@@ -1,4 +1,4 @@
-package gpamanager;
+package gpa_manager;
 
 import java.io.BufferedReader;
 import java.io.File;

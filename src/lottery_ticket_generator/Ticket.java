@@ -1,4 +1,4 @@
-package lotteryticketgenerator;
+package lottery_ticket_generator;
 
 import java.util.ArrayList;
 

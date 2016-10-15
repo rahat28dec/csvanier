@@ -1,4 +1,4 @@
-package savingsaccount;
+package savings_account;
 
 /**
  *
