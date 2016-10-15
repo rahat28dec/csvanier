@@ -84,10 +84,13 @@ public class GpaManager {
             
             ////////////////////////////////////////////////////////////////////
             // create the folder if not exits
-            String gradingSysFolder = 
-                    this.util.returnGradingSystem(
-                            this.gs.getGradingSystem()
-                    ).toLowerCase();
+            
+//            String gradingSysFolder = 
+//                    this.util.returnGradingSystem(
+//                            this.gs.getGradingSystem()
+//                    ).toLowerCase();
+            String gradingSysFolder = this.returnGradingSysFolder(this.gs);
+
             File gradingSysFolderDir = new File("dist\\"+gradingSysFolder);
             if(!gradingSysFolderDir.exists()) {
                 System.out.println("creating directory: " + gradingSysFolder);
@@ -124,6 +127,17 @@ public class GpaManager {
         Collections.sort(this.gpaArrayList, (GpaItem a, GpaItem b)->
                 a.getCourseName().compareToIgnoreCase(b.getCourseName()));
         
+    }
+    
+    /**
+     * This will return a string a chosen grading system
+     * that will be use to create a directory to
+     * store file
+     * @param gs to get the grading system
+     * @return return the string grading system in lowercase
+     */
+    public String returnGradingSysFolder(GradingSystem gs) {
+        return this.util.returnGradingSystem(gs.getGradingSystem()).toLowerCase();
     }
     
     private GpaItem formatData(String line) {
@@ -214,10 +228,12 @@ public class GpaManager {
     
     private void save() {
         try {
-            String gradingSysFolder = 
-                    this.util.returnGradingSystem(
-                            this.gs.getGradingSystem()
-                    ).toLowerCase();
+            
+//            String gradingSysFolder = 
+//                    this.util.returnGradingSystem(
+//                            this.gs.getGradingSystem()
+//                    ).toLowerCase();
+            String gradingSysFolder = this.returnGradingSysFolder(this.gs);
             PrintWriter pw;
             pw = new PrintWriter(new FileWriter("dist\\"+gradingSysFolder+"\\"+this.fileName));
             for(int i = 0; i < this.gpaArrayList.size(); i++) {
