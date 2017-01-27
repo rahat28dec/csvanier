@@ -1,13 +1,4 @@
-/*
- * LetterAvatar
- * 
- * Artur Heinze
- * Create Letter avatar based on Initials
- * based on https://gist.github.com/leecrossley/6027780
- */
 (function(w, d) {
-
-
     function LetterAvatar(name, size) {
         size = size || 60;
 
